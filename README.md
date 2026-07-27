@@ -28,3 +28,13 @@ ENV=development
 ```shell
 go run main.go
 ```
+
+### Seed the database
+
+To populate the `todos` collection with sample data, run the `scripts/seed.js` script with `mongosh`, using the same `MONGODB_URI` from your `.env` file:
+
+```shell
+mongosh "$MONGODB_URI" scripts/seed.js
+```
+
+This clears the `todos` collection and inserts a few example tasks.
