@@ -29,6 +29,14 @@ ENV=development
 go run main.go
 ```
 
+### Run API + frontend together
+
+`task dev` (requires [go-task](https://taskfile.dev)) starts the Go API with hot-reload (`air`) and the Vite dev server at the same time, in a single terminal:
+
+```shell
+task dev
+```
+
 ### Seed the database
 
 To populate the `todos` collection with sample data, run the `scripts/seed.js` script with `mongosh`, using the same `MONGODB_URI` from your `.env` file:

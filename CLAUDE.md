@@ -16,6 +16,10 @@ go build -o main .           # build binary
 air                          # hot-reload dev server (config: air.toml)
 ```
 
+### Run both API and frontend at once
+
+`task dev` (see `Taskfile.yml`, requires `go-task`) runs `air` and `npm run dev` (in `client/`) concurrently as parallel deps, so you don't need two separate terminals.
+
 Requires a `.env` file (see `.env.sample`): `PORT`, `MONGODB_URI`, `ENV`. When `ENV=production`, `.env` is not loaded (expects real env vars) and the app also serves static files from `client/dist`.
 
 ### Frontend (from `client/`)
@@ -35,4 +39,4 @@ There is no test suite configured for either the backend or frontend.
 - **`client/src/App.tsx`** — defines `BASE_URL`, switching between `http://localhost:5000/api` in dev and `/api` in production (same-origin, since Go serves the built client in prod). Other components import `BASE_URL` from here rather than hardcoding it.
 - **Data fetching** — TanStack Query (`useQuery`/`useMutation`) directly against the Fiber API in `client/src/components/*`; no separate API client layer.
 - **UI** — ChakraUI with a custom theme in `client/src/chakra/theme.ts`; components under `client/src/components/` (`Navbar`, `TodoForm`, `TodoList`, `TodoItem`).
-- **CORS** is currently commented out in `main.go`; dev relies on the frontend hitting `localhost:5000` directly and there being no cross-origin issue during local testing (Vite doesn't proxy `/api`).
+- **CORS** — enabled in `main.go` outside of `ENV=production`, allowing the Vite dev server origin (`http://localhost:5173`) to call the API on `localhost:5000`.

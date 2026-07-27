@@ -1,0 +1,17 @@
+version: "3"
+
+tasks:
+  dev:
+    desc: Run the Go API (air) and the Vite dev server together
+    deps:
+      - dev:api
+      - dev:client
+
+  dev:api:
+    desc: Run the Go API with hot-reload (air)
+    cmd: air
+
+  dev:client:
+    desc: Run the Vite dev server
+    dir: client
+    cmd: npm run dev
